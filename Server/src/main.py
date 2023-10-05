@@ -3,6 +3,7 @@ import rpyc
 class StockService(rpyc.Service):
 
     def on_connect(self, conn):
+        print("new connection!")
         # code that runs when a connection is created
         # (to init the service, if needed)
         pass
