@@ -1,4 +1,5 @@
 import rpyc
+import requests
 
 class StockService(rpyc.Service):
 
@@ -13,13 +14,27 @@ class StockService(rpyc.Service):
         # (to finalize the service, if needed)
         pass
 
-    def exposed_get_answer(self): # this is an exposed method
-        return 42
+    def exposed_get_stock_price(self, ticker):
+        data = self.get_stock_data(ticker)
 
-    exposed_the_real_answer_though = 43     # an exposed attribute
+        if not (data is None):
+            message = f'{ticker}: {data["Global Quote"]["05. price"]}'
+            print(message)
+            return message
+        
+        return None
 
-    def get_question(self):  # while this method is not exposed
-        return "what is the airspeed velocity of an unladen swallow?"
+    def get_stock_data(self, ticker):
+        url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={ticker}&apikey=CA5GUM3M825B9QS5'
+        r = requests.get(url)
+        data = r.json()
+
+        if "Global Quote" in data:
+            print(data)
+            return data
+
+        return None
+        
 
 if __name__ == "__main__":
     from rpyc.utils.server import ThreadedServer
