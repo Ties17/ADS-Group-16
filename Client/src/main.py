@@ -3,11 +3,10 @@ import rpyc, sched, time, random, sys
 def read_tickers():
     file = open("/app/src/tickers.txt")
     for line in file:
-        tickers.append(line)
+        tickers.append(line[:-1])
 
 def get_random_stock_ticker():
     index = random.randint(0, len(tickers) - 1)
-
     return tickers[index]
 
 interval = int(sys.argv[1])

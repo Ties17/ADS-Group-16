@@ -17,22 +17,24 @@ class StockService(rpyc.Service):
     def exposed_get_stock_price(self, ticker):
         try:
             data = self.get_stock_data(ticker)
+        except:
+            print(f"Ticker: {ticker} does not exist")
+            return
+        else:
             message = f'{ticker}: {data}'
             print(message)
             return message
-        except:
-            print(f"Ticker: {ticker} does not exist")
 
 
     def get_stock_data(self, ticker):
         stock = yf.Ticker(ticker)
-        try:
-            info = ticker.info
-        except:
-            print(f"Ticker: {ticker} does not exists")
-            return None
+        # try:
+        #     info = ticker.info
+        # except:
+        #     print(f"Ticker: {ticker} does not exists")
+        #     return None
 
-        return stock.history(period='3m', interval='1m').iloc[-1]['Close']
+        return stock.history(period='1d', interval='5m').iloc[-1]['Close']
         
 
 if __name__ == "__main__":
