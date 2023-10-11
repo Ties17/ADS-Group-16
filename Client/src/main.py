@@ -1,9 +1,11 @@
 import rpyc, sched, time, random, sys
 
 def read_tickers():
-    file = open("/app/src/tickers.txt")
+    file = open("./tickers.txt")
+    #file = open("/app/src/tickers.txt")
+
     for line in file:
-        tickers.append(line[:-1])
+        tickers.append(line.strip())
 
 def get_random_stock_ticker():
     index = random.randint(0, len(tickers) - 1)
@@ -19,6 +21,8 @@ tickers = []
 read_tickers()
 
 scheduler = sched.scheduler(time.monotonic, time.sleep)
+
+c = rpyc.connect("localhost", port=18861)
 
 def do_request():
     batchSize = random.randint(1, 5)
