@@ -23,7 +23,7 @@ class StockService(rpyc.Service):
             return
         else:
             message = f'{ticker}: {data}'
-            print(message)
+            # print(message)
             return message
 
 
