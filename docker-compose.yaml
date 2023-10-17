@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  server:
+    image: ads-server
+    networks:
+      ads:
+        ipv4_address: "172.18.0.10"
+    ports:
+      - "18861:18861"
+
+  client:
+    image: ads-client
+    networks:
+      ads:
+        ipv4_address: "172.18.0.20"
+
+networks:
+  ads:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.18.0.0/24"

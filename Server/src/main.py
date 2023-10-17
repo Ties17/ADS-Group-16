@@ -1,3 +1,4 @@
+import time
 import rpyc
 import yfinance as yf
 
@@ -40,4 +41,5 @@ class StockService(rpyc.Service):
 if __name__ == "__main__":
     from rpyc.utils.server import ThreadedServer
     t = ThreadedServer(StockService, port=18861)
+    print("Server created")
     t.start()

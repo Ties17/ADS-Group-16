@@ -1,5 +1,7 @@
 import rpyc, sched, time, random, sys
 
+time.sleep(5)
+
 def read_tickers():
     file = open("/app/src/tickers.txt")
     for line in file:
@@ -10,13 +12,15 @@ def get_random_stock_ticker():
     return tickers[index]
 
 interval = int(sys.argv[1])
+ip_address = sys.argv[2]
+print(f"Trying to connect to {ip_address}")
 
 tickers = []
 read_tickers()
 
 scheduler = sched.scheduler(time.monotonic, time.sleep)
 
-c = rpyc.connect("172.17.0.2", port=18861)
+c = rpyc.connect(ip_address, port=18861)
 
 def do_request():
     print(c.root.get_stock_price(get_random_stock_ticker()))

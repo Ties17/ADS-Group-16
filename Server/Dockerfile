@@ -7,6 +7,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+# Install ping service used for health checks
+RUN apt-get update && apt-get install nmap -y
+
 # Install pip requirements
 COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
@@ -23,3 +26,5 @@ EXPOSE 18861
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["python", "src/main.py"]
+
+# HEALTHCHECK --interval=5s --timeout=3s --start-period=10s CMD nmap -p 18861 localhost | grep open -q || exit 1
