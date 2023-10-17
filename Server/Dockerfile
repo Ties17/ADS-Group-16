@@ -27,4 +27,4 @@ EXPOSE 18861
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["python", "src/main.py"]
 
-# HEALTHCHECK --interval=5s --timeout=3s --start-period=10s CMD nmap -p 18861 localhost | grep open -q || exit 1
+HEALTHCHECK --interval=5s --timeout=3s --start-period=10s CMD python ./src/healthcheck.py

@@ -24,6 +24,10 @@ services:
     image: ads-client
     networks:
       - ads
+    depends_on:
+      - server1
+      - server2
+      - server3
     deploy:
       mode: replicated
       replicas: 10
