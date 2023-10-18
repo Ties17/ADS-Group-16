@@ -1,7 +1,5 @@
 import rpyc, sched, time, random, sys
 
-time.sleep(5)
-
 def read_tickers():
     file = open("/app/src/tickers.txt")
     for line in file:

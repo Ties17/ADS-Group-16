@@ -25,9 +25,7 @@ services:
     networks:
       - ads
     depends_on:
-      - server1
-      - server2
-      - server3
+      - nginx
     deploy:
       mode: replicated
       replicas: 10
@@ -37,6 +35,10 @@ services:
     networks:
       ads:
         ipv4_address: "172.18.0.10"
+    depends_on:
+      - server1
+      - server2
+      - server3
 
 networks:
   ads:
