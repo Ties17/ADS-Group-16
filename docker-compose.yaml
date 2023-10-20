@@ -9,8 +9,8 @@ services:
     ports:
       - "18861:18861"
 
-  client:
-    image: ads-client
+  batch-client:
+    image: ads-batch-client
     networks:
       ads:
         ipv4_address: "172.18.0.20"
