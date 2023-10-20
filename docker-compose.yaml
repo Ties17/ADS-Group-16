@@ -20,8 +20,8 @@ services:
       ads:
         ipv4_address: "172.18.0.32"
 
-  client:
-    image: ads-client
+  batch-client:
+    image: ads-batch-client
     networks:
       - ads
     depends_on:
@@ -29,7 +29,7 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-  
+
   nginx:
     image: ads-nginx
     networks:
