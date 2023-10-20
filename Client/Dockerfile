@@ -21,4 +21,4 @@ USER appuser
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 ENTRYPOINT ["python", "src/main.py"]
-CMD ["3"]
+CMD ["3", "172.18.0.10"]
