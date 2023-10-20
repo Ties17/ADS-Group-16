@@ -9,6 +9,8 @@ def get_random_stock_ticker():
     index = random.randint(0, len(tickers) - 1)
     return tickers[index]
 
+time.sleep(3)
+
 interval = int(sys.argv[1])
 ip_address = sys.argv[2]
 # print(f"Trying to connect to {ip_address}")
