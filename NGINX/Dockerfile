@@ -1,4 +1,5 @@
 FROM nginx
-RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY content /usr/share/nginx/html
-COPY conf /etc/nginx
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+HEALTHCHECK --interval=5m --timeout=3s CMD curl --fail http://nginx.host.com/ || exit 1
