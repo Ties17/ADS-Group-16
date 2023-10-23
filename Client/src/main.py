@@ -15,9 +15,7 @@ tickers = []
 read_tickers()
 
 scheduler = sched.scheduler(time.monotonic, time.sleep)
-
 c = rpyc.connect("172.17.0.2", port=18861)
-
 def do_request():
     print(c.root.get_stock_price(get_random_stock_ticker()))
 
