@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+
+  server1:
+    image: ads-server
+    networks:
+      ads:
+        ipv4_address: "172.18.0.30"
+  
+  server2:
+    image: ads-server
+    networks:
+      ads:
+        ipv4_address: "172.18.0.31"
+  
+  server3:
+    image: ads-server
+    networks:
+      ads:
+        ipv4_address: "172.18.0.32"
+
+  client:
+    image: ads-client
+    networks:
+      - ads
+    depends_on:
+      - nginx
+    deploy:
+      mode: replicated
+      replicas: 3
+  
+  nginx:
+    image: ads-nginx
+    networks:
+      ads:
+        ipv4_address: "172.18.0.10"
+    depends_on:
+      - server1
+      - server2
+      - server3
+
+networks:
+  ads:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.18.0.0/24"
