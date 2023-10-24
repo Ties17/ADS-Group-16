@@ -28,7 +28,7 @@ services:
       - nginx
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 3
   
   nginx:
     image: ads-nginx

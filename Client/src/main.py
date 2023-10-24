@@ -1,9 +1,11 @@
 import rpyc, sched, time, random, sys
 
 def read_tickers():
-    file = open("/app/src/tickers.txt")
+    file = open("./tickers.txt")
+    #file = open("/app/src/tickers.txt")
+
     for line in file:
-        tickers.append(line[:-1])
+        tickers.append(line.strip())
 
 def get_random_stock_ticker():
     index = random.randint(0, len(tickers) - 1)
@@ -20,13 +22,23 @@ read_tickers()
 
 scheduler = sched.scheduler(time.monotonic, time.sleep)
 
-def do_request():
-    batchSize = random.randint(1, 5)
-    for i in range(batchSize):
-        c = rpyc.connect(ip_address, port=18861)
-        print(c.root.get_stock_price(get_random_stock_ticker()))
+def print_result(req):
+    print(req.value)
 
-    scheduler.enter((random.randint(0,30) / 10), 1, do_request)
+def do_request():
+    try:
+        c = rpyc.connect(ip_address, port=18861)
+        # c._config['sync_request_timeout'] = 3
+        timed_get_stock = rpyc.timed(c.root.get_stock_price, 3)
+        # timed_get_stock.add_callback(print_result)
+        req = timed_get_stock(get_random_stock_ticker())
+        print(req.value)
+        # print(c.root.get_stock_price())
+    except:
+        print("request timed out, continue")
+        pass     
+
+    scheduler.enter(1, 1, do_request)
 
 scheduler.enter(1, 1, do_request)
 scheduler.run()
