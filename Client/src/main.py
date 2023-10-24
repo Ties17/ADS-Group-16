@@ -1,8 +1,8 @@
 import rpyc, sched, time, random, sys
 
 def read_tickers():
-    file = open("./tickers.txt")
-    #file = open("/app/src/tickers.txt")
+    # file = open("./tickers.txt")
+    file = open("/app/src/tickers.txt")
 
     for line in file:
         tickers.append(line.strip())
